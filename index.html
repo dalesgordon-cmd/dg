@@ -13,10 +13,11 @@
       --muted: #5d6576;
       --line: #e6dfd0;
       --brand: #0f4c81;
+      --hero-a: #0f4c81;
+      --hero-b: #0a3760;
       --brand-ink: #ffffff;
       --accent: #e8a317;
-      --open: #1f7a3d;
-      --closed: #a33a2a;
+      --accent-soft: #fdf1d6;
     }
     @media (prefers-color-scheme: dark) {
       :root {
@@ -26,10 +27,11 @@
         --muted: #a5adbd;
         --line: #2c3446;
         --brand: #4d8fd1;
-        --brand-ink: #0b1220;
+        --hero-a: #163a63;
+        --hero-b: #0d2440;
+        --brand-ink: #ffffff;
         --accent: #f2b84b;
-        --open: #5cc27f;
-        --closed: #f08a78;
+        --accent-soft: #2d2618;
       }
     }
 
@@ -42,34 +44,65 @@
       font: 17px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     }
     a { color: inherit; }
-    .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+    .wrap { max-width: 1000px; margin: 0 auto; padding: 0 16px; }
+    .serif { font-family: Georgia, "Times New Roman", serif; }
 
-    /* Header */
+    /* Hero */
     header {
-      background: var(--brand);
+      background: linear-gradient(160deg, var(--hero-a) 0%, var(--hero-b) 100%);
       color: var(--brand-ink);
-      padding: 48px 0 40px;
-      text-align: center;
+      padding: 48px 0;
+      overflow: hidden;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
     }
     header h1 {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(2.2rem, 7vw, 3.6rem);
-      letter-spacing: 0.01em;
+      font-size: clamp(2.4rem, 7vw, 3.8rem);
+      line-height: 1.05;
     }
-    header p { margin: 8px 0 24px; font-size: 1.1rem; opacity: 0.9; }
+    header p.lede { margin: 12px 0 24px; font-size: 1.15rem; opacity: 0.92; max-width: 32ch; }
+    .cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
     .call {
       display: inline-block;
       background: var(--accent);
       color: #1d2433;
       text-decoration: none;
       font-weight: 700;
-      font-size: 1.25rem;
-      padding: 14px 26px;
+      font-size: 1.2rem;
+      padding: 13px 24px;
       border-radius: 999px;
     }
     .call:hover, .call:focus-visible { filter: brightness(1.08); }
-    .status { margin-top: 16px; font-weight: 600; min-height: 1.5em; }
+    .ghost {
+      color: var(--brand-ink); text-decoration: none; font-weight: 600;
+      padding: 12px 20px; border: 2px solid rgba(255,255,255,0.5); border-radius: 999px;
+    }
+    .ghost:hover { border-color: #fff; }
+    .status {
+      margin-top: 18px; font-weight: 600; min-height: 1.5em;
+      display: inline-block; padding: 4px 12px; border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+    }
+    .hero-art svg { width: 100%; height: auto; max-width: 440px; display: block; margin: 0 auto; }
+
+    @media (max-width: 720px) {
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      header p.lede { margin-left: auto; margin-right: auto; }
+      .cta { justify-content: center; }
+      .hero-art svg { max-width: 300px; }
+    }
 
     nav {
       position: sticky; top: 0; z-index: 2;
@@ -78,29 +111,47 @@
     }
     nav ul {
       list-style: none; margin: 0 auto; padding: 0 16px;
-      max-width: 960px; display: flex; gap: 24px; justify-content: center;
+      max-width: 1000px; display: flex; gap: 22px; justify-content: center; flex-wrap: wrap;
     }
     nav a { display: block; padding: 12px 0; text-decoration: none; font-weight: 600; color: var(--muted); }
     nav a:hover { color: var(--ink); }
 
-    section { padding: 48px 0 8px; }
+    section { padding: 52px 0 8px; scroll-margin-top: 48px; }
     h2 {
       font-family: Georgia, "Times New Roman", serif;
       font-size: 1.9rem;
-      margin: 0 0 20px;
+      margin: 0 0 8px;
     }
+    .section-intro { margin: 0 0 24px; color: var(--muted); max-width: 60ch; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    /* Why us */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+      gap: 20px;
+    }
+    .feature .icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: var(--accent-soft);
+      display: grid; place-items: center;
+      margin-bottom: 12px;
+    }
+    .feature .icon svg { width: 28px; height: 28px; }
+    .feature h3 { margin: 0 0 6px; font-size: 1.05rem; }
+    .feature p { margin: 0; color: var(--muted); font-size: 0.95rem; }
 
     /* Menu */
     .menu {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
       gap: 20px;
-    }
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 20px;
     }
     .card h3 { margin: 0 0 4px; font-size: 1.15rem; color: var(--brand); }
     .card .note { margin: 0 0 12px; color: var(--muted); font-size: 0.9rem; }
@@ -110,13 +161,20 @@
       padding: 7px 0; border-bottom: 1px dashed var(--line);
     }
     .card li:last-child { border-bottom: 0; }
+    .card li small { display: block; color: var(--muted); font-size: 0.85rem; }
     .price { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
+    .tag {
+      display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; padding: 1px 7px; border-radius: 6px; margin-left: 6px;
+      background: var(--accent-soft); color: var(--ink); vertical-align: 2px;
+    }
+    .deals { background: var(--accent-soft); border-color: transparent; grid-column: 1 / -1; }
     .small { color: var(--muted); font-size: 0.9rem; margin-top: 16px; }
 
     /* Hours */
-    .hours-grid {
+    .two-col {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
       gap: 20px;
       align-items: start;
     }
@@ -126,66 +184,186 @@
     tr:last-child td { border-bottom: 0; }
     tr.today td { font-weight: 700; color: var(--brand); }
 
+    /* Reviews */
+    .reviews {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+      gap: 20px;
+    }
+    blockquote { margin: 0; }
+    blockquote p { margin: 0 0 10px; font-style: italic; }
+    .stars { color: var(--accent); letter-spacing: 2px; margin-bottom: 8px; }
+    cite { color: var(--muted); font-style: normal; font-size: 0.9rem; }
+
+    /* Map */
+    .map {
+      border-radius: 12px; overflow: hidden; border: 1px solid var(--line);
+      aspect-ratio: 4 / 3; background: var(--surface);
+    }
+    .map-link { display: inline-block; margin-top: 8px; font-size: 0.9rem; color: var(--muted); }
+    .map iframe { width: 100%; height: 100%; border: 0; display: block; }
+
     footer {
-      margin-top: 48px;
+      margin-top: 56px;
       padding: 28px 0;
       border-top: 1px solid var(--line);
       color: var(--muted);
       font-size: 0.9rem;
       text-align: center;
     }
+    footer p { margin: 4px 0; }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="wrap">
-    <h1>The Tay Fryer</h1>
-    <p>Fish &amp; chips frae the banks o’ the Tay since 1987</p>
-    <a class="call" href="tel:+441632960123">📞 01632 960 123</a>
-    <div class="status" id="status" aria-live="polite"></div>
+  <div class="wrap hero">
+    <div>
+      <span class="eyebrow">Dundee · Est. 1987</span>
+      <h1>The Tay Fryer</h1>
+      <p class="lede">Fish &amp; chips frae the banks o’ the Tay. Fresh haddock, proper bridies, and chips done in beef dripping.</p>
+      <div class="cta">
+        <a class="call" href="tel:+441632960123">📞 01632 960 123</a>
+        <a class="ghost" href="#menu">See the menu</a>
+      </div>
+      <div class="status" id="status" aria-live="polite"></div>
+    </div>
+
+    <div class="hero-art" aria-hidden="true">
+      <!-- Illustrated fish supper -->
+      <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="200" cy="262" rx="165" ry="18" fill="#000" opacity="0.18"/>
+        <!-- paper -->
+        <path d="M40 120 L360 96 L372 236 L52 258 Z" fill="#f6f0e2"/>
+        <path d="M40 120 L360 96 L372 236 L52 258 Z" fill="none" stroke="#d8cdb4" stroke-width="3"/>
+        <path d="M60 136 L345 114" stroke="#e4d9c0" stroke-width="2"/>
+        <!-- chips -->
+        <g stroke="#c98f1d" stroke-width="2" fill="#f4c757">
+          <rect x="70" y="150" width="96" height="16" rx="5" transform="rotate(-14 118 158)"/>
+          <rect x="78" y="176" width="104" height="16" rx="5" transform="rotate(8 130 184)"/>
+          <rect x="64" y="200" width="92" height="16" rx="5" transform="rotate(-4 110 208)"/>
+          <rect x="96" y="160" width="88" height="16" rx="5" transform="rotate(24 140 168)"/>
+          <rect x="88" y="214" width="100" height="16" rx="5" transform="rotate(12 138 222)"/>
+          <rect x="120" y="190" width="80" height="16" rx="5" transform="rotate(-22 160 198)"/>
+          <rect x="300" y="190" width="56" height="15" rx="5" transform="rotate(-10 328 197)"/>
+          <rect x="296" y="210" width="60" height="15" rx="5" transform="rotate(14 326 217)"/>
+        </g>
+        <!-- fish -->
+        <g transform="rotate(-8 250 170)">
+          <path d="M150 170 C170 120, 300 112, 330 160 C300 210, 170 216, 150 170 Z" fill="#dc9a2e" stroke="#a96d12" stroke-width="3"/>
+          <path d="M326 160 L366 132 L360 162 L368 192 Z" fill="#dc9a2e" stroke="#a96d12" stroke-width="3" stroke-linejoin="round"/>
+          <g fill="#f2bd57" opacity="0.9">
+            <circle cx="190" cy="160" r="7"/><circle cx="222" cy="148" r="6"/><circle cx="256" cy="152" r="8"/>
+            <circle cx="210" cy="182" r="6"/><circle cx="244" cy="180" r="7"/><circle cx="286" cy="168" r="6"/>
+            <circle cx="300" cy="150" r="4"/><circle cx="176" cy="178" r="4"/>
+          </g>
+          <g fill="#b97818" opacity="0.55">
+            <circle cx="236" cy="164" r="3"/><circle cx="270" cy="186" r="3"/><circle cx="198" cy="196" r="2.5"/>
+          </g>
+        </g>
+        <!-- lemon -->
+        <g transform="translate(316 92) rotate(18)">
+          <path d="M0 40 A40 40 0 0 1 80 40 Z" fill="#ffe36b" stroke="#d1b21b" stroke-width="3"/>
+          <path d="M8 40 A32 32 0 0 1 72 40 Z" fill="#fff3a6"/>
+          <g stroke="#e8cc3a" stroke-width="2"><line x1="40" y1="40" x2="40" y2="12"/><line x1="40" y1="40" x2="18" y2="20"/><line x1="40" y1="40" x2="62" y2="20"/></g>
+        </g>
+        <!-- wooden fork -->
+        <g transform="translate(70 70) rotate(-30)">
+          <rect x="0" y="0" width="12" height="70" rx="5" fill="#d8b98a" stroke="#ad8a55" stroke-width="2"/>
+          <rect x="-1" y="-12" width="3" height="16" fill="#d8b98a"/><rect x="10" y="-12" width="3" height="16" fill="#d8b98a"/>
+        </g>
+      </svg>
+    </div>
   </div>
 </header>
 
 <nav aria-label="Sections">
   <ul>
+    <li><a href="#about">About</a></li>
     <li><a href="#menu">Menu</a></li>
     <li><a href="#hours">Hours</a></li>
+    <li><a href="#reviews">Reviews</a></li>
     <li><a href="#find-us">Find us</a></li>
   </ul>
 </nav>
 
 <main class="wrap">
 
+  <section id="about">
+    <h2>Why folk come back</h2>
+    <p class="section-intro">Three generations of the same family have been frying on this corner. We keep it simple: good fish, good tatties, and a fryer that’s never left to idle.</p>
+    <div class="features">
+      <div class="card feature">
+        <div class="icon">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16c4-6 14-8 20-2l4-4v12l-4-4c-6 6-16 4-20-2z"/><circle cx="10" cy="15" r="1" fill="currentColor"/></svg>
+        </div>
+        <h3>Fresh haddock daily</h3>
+        <p>Landed at Peterhead and on our counter the same morning. Never frozen.</p>
+      </div>
+      <div class="card feature">
+        <div class="icon">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4c4 5 8 9 8 14a8 8 0 0 1-16 0c0-5 4-9 8-14z"/></svg>
+        </div>
+        <h3>Beef dripping</h3>
+        <p>The old way, for a crisper batter. Veggie items go in a separate vegetable-oil fryer.</p>
+      </div>
+      <div class="card feature">
+        <div class="icon">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="16" cy="17" rx="10" ry="8"/><circle cx="12" cy="15" r="1" fill="currentColor"/><circle cx="19" cy="19" r="1" fill="currentColor"/><circle cx="20" cy="13" r="1" fill="currentColor"/></svg>
+        </div>
+        <h3>Angus tatties</h3>
+        <p>Maris Pipers from a farm up the road, hand-cut every afternoon.</p>
+      </div>
+      <div class="card feature">
+        <div class="icon">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10h20l-2 16H8z"/><path d="M11 10V8a5 5 0 0 1 10 0v2"/></svg>
+        </div>
+        <h3>Bridies &amp; pehs</h3>
+        <p>From a Dundee bakery we’ve used for over thirty years.</p>
+      </div>
+    </div>
+  </section>
+
   <section id="menu">
     <h2>Menu</h2>
+    <p class="section-intro">All suppers come wi’ chips. Ask for a <em>single</em> if you just want the fish or the bridie on its own.</p>
     <div class="menu">
       <div class="card">
-        <h3>Suppers</h3>
-        <p class="note">All suppers come wi’ chips. Single = no chips.</p>
+        <h3>Fish suppers</h3>
+        <p class="note">Battered to order. Breaded available on request.</p>
         <ul>
-          <li><span>Haddock supper</span><span class="price">£11.50</span></li>
+          <li><span>Haddock supper <span class="tag">Favourite</span></span><span class="price">£11.50</span></li>
           <li><span>Large haddock supper</span><span class="price">£13.90</span></li>
+          <li><span>Small haddock supper<small>Lighter appetite portion</small></span><span class="price">£9.20</span></li>
+          <li><span>Cod supper</span><span class="price">£12.50</span></li>
           <li><span>Scampi supper</span><span class="price">£10.80</span></li>
-          <li><span>Bridie supper</span><span class="price">£7.60</span></li>
-          <li><span>Peh (Scotch pie) supper</span><span class="price">£6.90</span></li>
-          <li><span>Haggis supper</span><span class="price">£7.90</span></li>
-          <li><span>Black pudding supper</span><span class="price">£7.20</span></li>
-          <li><span>Mealie (white) pudding supper</span><span class="price">£7.20</span></li>
-          <li><span>Smoked sausage supper</span><span class="price">£7.40</span></li>
-          <li><span>Chicken goujon supper</span><span class="price">£8.50</span></li>
+          <li><span>Fish cake supper</span><span class="price">£6.40</span></li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Chippy specials</h3>
-        <p class="note">Battered and fried to order.</p>
+        <h3>Scottish suppers</h3>
+        <p class="note">The ones you won’t find down south.</p>
         <ul>
-          <li><span>Pizza crunch supper</span><span class="price">£8.90</span></li>
-          <li><span>Deep-fried Mars bar</span><span class="price">£3.20</span></li>
-          <li><span>Battered sausage</span><span class="price">£2.60</span></li>
-          <li><span>Fritter (battered tattie)</span><span class="price">£1.50</span></li>
-          <li><span>Veggie haggis supper</span><span class="price">£7.90</span></li>
+          <li><span>Bridie supper<small>Steak &amp; onion pastry</small></span><span class="price">£7.60</span></li>
+          <li><span>Peh supper<small>Scotch mince pie</small></span><span class="price">£6.90</span></li>
+          <li><span>Haggis supper</span><span class="price">£7.90</span></li>
+          <li><span>Veggie haggis supper <span class="tag">V</span></span><span class="price">£7.90</span></li>
+          <li><span>Black pudding supper</span><span class="price">£7.20</span></li>
+          <li><span>Mealie (white) pudding supper</span><span class="price">£7.20</span></li>
+          <li><span>Smoked sausage supper</span><span class="price">£7.40</span></li>
+          <li><span>Pizza crunch supper<small>Battered, deep-fried pizza</small></span><span class="price">£8.90</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Chicken &amp; burgers</h3>
+        <ul>
+          <li><span>Chicken goujon supper</span><span class="price">£8.50</span></li>
+          <li><span>Southern fried chicken supper</span><span class="price">£8.90</span></li>
+          <li><span>Quarter-pounder supper</span><span class="price">£7.80</span></li>
+          <li><span>Cheeseburger supper</span><span class="price">£8.20</span></li>
+          <li><span>Roll ’n’ chips<small>Any single in a buttered roll</small></span><span class="price">+£0.80</span></li>
         </ul>
       </div>
 
@@ -195,30 +373,54 @@
           <li><span>Small chips</span><span class="price">£3.20</span></li>
           <li><span>Large chips</span><span class="price">£4.30</span></li>
           <li><span>Cheesy chips</span><span class="price">£4.80</span></li>
-          <li><span>Curry sauce</span><span class="price">£1.60</span></li>
-          <li><span>Gravy</span><span class="price">£1.50</span></li>
+          <li><span>Curry or gravy chips</span><span class="price">£4.90</span></li>
+          <li><span>Fritter<small>Battered slice o’ tattie</small></span><span class="price">£1.50</span></li>
+          <li><span>Battered sausage</span><span class="price">£2.60</span></li>
+          <li><span>Onion rings (8)</span><span class="price">£2.80</span></li>
           <li><span>Mushy peas</span><span class="price">£1.60</span></li>
-          <li><span>Pickled onion / egg</span><span class="price">£0.90</span></li>
+          <li><span>Pickled onion / pickled egg</span><span class="price">£0.90</span></li>
         </ul>
       </div>
 
       <div class="card">
-        <h3>Wee ones &amp; drinks</h3>
+        <h3>Sauces, sweets &amp; drinks</h3>
         <ul>
-          <li><span>Kids’ fish bites &amp; chips</span><span class="price">£5.90</span></li>
-          <li><span>Kids’ sausage &amp; chips</span><span class="price">£5.20</span></li>
+          <li><span>Curry sauce / gravy</span><span class="price">£1.60</span></li>
+          <li><span>Tartare, garlic mayo or ketchup pot</span><span class="price">£0.70</span></li>
+          <li><span>Deep-fried Mars bar</span><span class="price">£3.20</span></li>
+          <li><span>Deep-fried Tunnock’s teacake</span><span class="price">£3.40</span></li>
           <li><span>Irn-Bru (can)</span><span class="price">£1.40</span></li>
           <li><span>Other soft drinks (can)</span><span class="price">£1.30</span></li>
-          <li><span>Bottled water</span><span class="price">£1.10</span></li>
+          <li><span>Tea / coffee</span><span class="price">£1.50</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Wee ones</h3>
+        <p class="note">Under 12s. Comes wi’ a small chips and a carton o’ juice.</p>
+        <ul>
+          <li><span>Fish bites</span><span class="price">£5.90</span></li>
+          <li><span>Sausage</span><span class="price">£5.20</span></li>
+          <li><span>Chicken nuggets</span><span class="price">£5.40</span></li>
+        </ul>
+      </div>
+
+      <div class="card deals">
+        <h3>Deals</h3>
+        <ul>
+          <li><span>Family feast<small>2 haddock suppers, 2 kids’ meals, 4 cans</small></span><span class="price">£34.00</span></li>
+          <li><span>Pensioners’ special<small>Small haddock supper, bread &amp; butter, tea · Tue–Thu before 5pm</small></span><span class="price">£8.50</span></li>
+          <li><span>Friday fish-for-two<small>2 haddock suppers, 2 mushy peas</small></span><span class="price">£24.00</span></li>
         </ul>
       </div>
     </div>
-    <p class="small">Salt ’n’ vinegar or salt ’n’ sauce — just ask. Please tell us about any allergies before you order; we fry in beef dripping and have a separate vegetable-oil fryer for veggie items.</p>
+    <p class="small">Salt ’n’ vinegar or salt ’n’ sauce — just ask. Please tell us about any allergies before you order: our batter contains gluten, and we use the same counter for fish, milk and egg products.</p>
   </section>
 
   <section id="hours">
     <h2>Opening hours</h2>
-    <div class="hours-grid">
+    <p class="section-intro">Beat the Friday queue — phone your order through and it’ll be hot and waiting.</p>
+    <div class="two-col">
       <div class="card">
         <table aria-label="Opening hours">
           <tbody id="hours-table">
@@ -234,29 +436,73 @@
       </div>
       <div class="card">
         <h3>Phone ahead</h3>
-        <p>Beat the Friday queue — call your order through and it’ll be hot and waiting.</p>
+        <p>Give us your name and what you’re after, and we’ll tell you when to come by. Usually 10–15 minutes, longer on a Friday.</p>
         <p><a class="call" href="tel:+441632960123">01632 960 123</a></p>
-        <p class="small">Hours may change on public holidays.</p>
+        <p class="small">Hours may change on public holidays. Last orders 10 minutes before close.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews">
+    <h2>What folk say</h2>
+    <p class="section-intro">Sample reviews for this demo site.</p>
+    <div class="reviews">
+      <div class="card">
+        <blockquote>
+          <div class="stars" aria-label="5 out of 5">★★★★★</div>
+          <p>“Batter that actually crunches and haddock that falls apart. Best supper I’ve had since moving to Dundee.”</p>
+          <cite>— Sample review</cite>
+        </blockquote>
+      </div>
+      <div class="card">
+        <blockquote>
+          <div class="stars" aria-label="5 out of 5">★★★★★</div>
+          <p>“Bridie supper on a Saturday after the fitba is a tradition in our house. Never had a bad one.”</p>
+          <cite>— Sample review</cite>
+        </blockquote>
+      </div>
+      <div class="card">
+        <blockquote>
+          <div class="stars" aria-label="4 out of 5">★★★★☆</div>
+          <p>“Queue on a Friday is long but they’re quick. Phone ahead and you’re in and out.”</p>
+          <cite>— Sample review</cite>
+        </blockquote>
       </div>
     </div>
   </section>
 
   <section id="find-us">
     <h2>Find us</h2>
-    <div class="card">
-      <p style="margin:0">
-        <strong>The Tay Fryer</strong><br>
-        12 Example Street<br>
-        Dundee DD1 0XX
-      </p>
-      <p class="small">Cash and card accepted. Takeaway only.</p>
+    <p class="section-intro">In the city centre, a short walk from the waterfront.</p>
+    <div class="two-col">
+      <div class="map">
+        <iframe
+          title="Map of Dundee city centre"
+          loading="lazy"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-2.9900%2C56.4560%2C-2.9500%2C56.4680&amp;layer=mapnik"></iframe>
+      </div>
+      <a class="map-link" href="https://www.openstreetmap.org/#map=16/56.4620/-2.9700" target="_blank" rel="noopener">Open larger map ↗</a>
+      <div class="card">
+        <h3>The Tay Fryer</h3>
+        <p style="margin:8px 0 16px">
+          12 Example Street<br>
+          Dundee DD1 0XX
+        </p>
+        <p style="margin:0 0 6px"><strong>Phone:</strong> <a href="tel:+441632960123">01632 960 123</a></p>
+        <p style="margin:0 0 6px"><strong>Payment:</strong> cash and card</p>
+        <p style="margin:0 0 6px"><strong>Service:</strong> takeaway only, phone orders welcome</p>
+        <p style="margin:0"><strong>Access:</strong> step-free entrance</p>
+      </div>
     </div>
   </section>
 
 </main>
 
 <footer>
-  <div class="wrap">© <span id="year">2026</span> The Tay Fryer, Dundee</div>
+  <div class="wrap">
+    <p>© <span id="year">2026</span> The Tay Fryer, Dundee</p>
+    <p>The Tay Fryer is a fictional business. This is a demo site: the name, address, phone number, prices and reviews are made up.</p>
+  </div>
 </footer>
 
 <script>
