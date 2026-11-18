@@ -115,8 +115,12 @@
     }
     nav a { display: block; padding: 12px 0; text-decoration: none; font-weight: 600; color: var(--muted); }
     nav a:hover { color: var(--ink); }
+    @media (max-width: 480px) {
+      nav ul { gap: 14px; flex-wrap: nowrap; }
+      nav a { font-size: 0.92rem; }
+    }
 
-    section { padding: 52px 0 8px; scroll-margin-top: 48px; }
+    section { padding: 52px 0 8px; scroll-margin-top: 36px; }
     h2 {
       font-family: Georgia, "Times New Roman", serif;
       font-size: 1.9rem;
@@ -200,8 +204,16 @@
       border-radius: 12px; overflow: hidden; border: 1px solid var(--line);
       aspect-ratio: 4 / 3; background: var(--surface);
     }
-    .map-link { display: inline-block; margin-top: 8px; font-size: 0.9rem; color: var(--muted); }
-    .map iframe { width: 100%; height: 100%; border: 0; display: block; }
+    .map svg { width: 100%; height: 100%; display: block; }
+    .map .land { fill: #efe7d4; } .map .water { fill: #a9cbe6; } .map .park { fill: #cfe3b8; }
+    .map .road { stroke: #ffffff; } .map .road-major { stroke: #f7d98a; }
+    .map .lbl { fill: #5d6576; font: 600 11px system-ui, sans-serif; letter-spacing: .04em; }
+    .map .lbl-water { fill: #3f6f96; font: italic 600 14px Georgia, serif; letter-spacing: .1em; }
+    @media (prefers-color-scheme: dark) {
+      .map .land { fill: #232a38; } .map .water { fill: #1d3a57; } .map .park { fill: #23402e; }
+      .map .road { stroke: #3a4458; } .map .road-major { stroke: #6b5a2c; }
+      .map .lbl { fill: #a5adbd; } .map .lbl-water { fill: #8fb8dc; }
+    }
 
     footer {
       margin-top: 56px;
@@ -475,13 +487,35 @@
     <h2>Find us</h2>
     <p class="section-intro">In the city centre, a short walk from the waterfront.</p>
     <div class="two-col">
-      <div class="map">
-        <iframe
-          title="Map of Dundee city centre"
-          loading="lazy"
-          src="https://www.openstreetmap.org/export/embed.html?bbox=-2.9900%2C56.4560%2C-2.9500%2C56.4680&amp;layer=mapnik"></iframe>
+      <div class="map" role="img" aria-label="Illustrated map: The Tay Fryer sits in the city centre, a few streets north of the River Tay waterfront">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <rect class="land" width="400" height="300"/>
+          <rect class="park" x="24" y="30" width="80" height="58" rx="8"/>
+          <rect class="park" x="300" y="22" width="76" height="46" rx="8"/>
+          <g class="road" stroke-width="7" stroke-linecap="round" fill="none">
+            <path d="M0 110 H400"/><path d="M0 60 C120 70 260 50 400 66"/>
+            <path d="M140 0 V230"/><path d="M250 0 L236 230"/><path d="M60 110 L40 230"/>
+            <path d="M330 110 L360 220"/><path d="M140 160 H236"/>
+          </g>
+          <path class="road-major" d="M0 196 C100 186 300 188 400 176" stroke-width="10" fill="none" stroke-linecap="round"/>
+          <path class="water" d="M0 232 C90 214 200 226 280 214 C330 206 370 204 400 200 V300 H0 Z"/>
+          <path class="road-major" d="M300 196 L380 300" stroke-width="9" stroke-linecap="round"/>
+          <text class="lbl-water" x="70" y="272">River Tay</text>
+          <text class="lbl" x="318" y="268" transform="rotate(52 318 268)">ROAD BRIDGE</text>
+          <text class="lbl" x="150" y="184">WATERFRONT</text>
+          <text class="lbl" x="30" y="64">PARK</text>
+          <text class="lbl" x="262" y="100">CITY CENTRE</text>
+          <g transform="translate(193 132)">
+            <ellipse cx="0" cy="2" rx="9" ry="3" fill="#000" opacity=".25"/>
+            <path d="M0 0 C-14 -16 -16 -24 -16 -30 A16 16 0 0 1 16 -30 C16 -24 14 -16 0 0 Z" fill="#e8a317" stroke="#a96d12" stroke-width="2"/>
+            <circle cx="0" cy="-30" r="6" fill="#fff"/>
+          </g>
+          <g transform="translate(193 76)">
+            <rect x="-50" y="-14" width="100" height="22" rx="11" fill="#0f4c81"/>
+            <text x="0" y="1.5" text-anchor="middle" fill="#fff" style="font:700 11px system-ui,sans-serif">The Tay Fryer</text>
+          </g>
+        </svg>
       </div>
-      <a class="map-link" href="https://www.openstreetmap.org/#map=16/56.4620/-2.9700" target="_blank" rel="noopener">Open larger map ↗</a>
       <div class="card">
         <h3>The Tay Fryer</h3>
         <p style="margin:8px 0 16px">
