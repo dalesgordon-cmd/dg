@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Tay Fryer – Fish &amp; Chips, Dundee</title>
+  <meta name="description" content="Proper fish suppers, bridies and pehs in Dundee. See our menu, opening hours and call ahead to order.">
+  <style>
+    :root {
+      --bg: #fbf7ef;
+      --surface: #ffffff;
+      --ink: #1d2433;
+      --muted: #5d6576;
+      --line: #e6dfd0;
+      --brand: #0f4c81;
+      --brand-ink: #ffffff;
+      --accent: #e8a317;
+      --open: #1f7a3d;
+      --closed: #a33a2a;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #12161f;
+        --surface: #1b2130;
+        --ink: #eef1f6;
+        --muted: #a5adbd;
+        --line: #2c3446;
+        --brand: #4d8fd1;
+        --brand-ink: #0b1220;
+        --accent: #f2b84b;
+        --open: #5cc27f;
+        --closed: #f08a78;
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 17px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    a { color: inherit; }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+
+    /* Header */
+    header {
+      background: var(--brand);
+      color: var(--brand-ink);
+      padding: 48px 0 40px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.2rem, 7vw, 3.6rem);
+      letter-spacing: 0.01em;
+    }
+    header p { margin: 8px 0 24px; font-size: 1.1rem; opacity: 0.9; }
+    .call {
+      display: inline-block;
+      background: var(--accent);
+      color: #1d2433;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.25rem;
+      padding: 14px 26px;
+      border-radius: 999px;
+    }
+    .call:hover, .call:focus-visible { filter: brightness(1.08); }
+    .status { margin-top: 16px; font-weight: 600; min-height: 1.5em; }
+
+    nav {
+      position: sticky; top: 0; z-index: 2;
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
+    }
+    nav ul {
+      list-style: none; margin: 0 auto; padding: 0 16px;
+      max-width: 960px; display: flex; gap: 24px; justify-content: center;
+    }
+    nav a { display: block; padding: 12px 0; text-decoration: none; font-weight: 600; color: var(--muted); }
+    nav a:hover { color: var(--ink); }
+
+    section { padding: 48px 0 8px; }
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.9rem;
+      margin: 0 0 20px;
+    }
+
+    /* Menu */
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .card h3 { margin: 0 0 4px; font-size: 1.15rem; color: var(--brand); }
+    .card .note { margin: 0 0 12px; color: var(--muted); font-size: 0.9rem; }
+    .card ul { list-style: none; margin: 0; padding: 0; }
+    .card li {
+      display: flex; justify-content: space-between; gap: 12px;
+      padding: 7px 0; border-bottom: 1px dashed var(--line);
+    }
+    .card li:last-child { border-bottom: 0; }
+    .price { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
+    .small { color: var(--muted); font-size: 0.9rem; margin-top: 16px; }
+
+    /* Hours */
+    .hours-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      align-items: start;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    td { padding: 9px 0; border-bottom: 1px solid var(--line); }
+    td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+    tr:last-child td { border-bottom: 0; }
+    tr.today td { font-weight: 700; color: var(--brand); }
+
+    footer {
+      margin-top: 48px;
+      padding: 28px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>The Tay Fryer</h1>
+    <p>Fish &amp; chips frae the banks o’ the Tay since 1987</p>
+    <a class="call" href="tel:+441632960123">📞 01632 960 123</a>
+    <div class="status" id="status" aria-live="polite"></div>
+  </div>
+</header>
+
+<nav aria-label="Sections">
+  <ul>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#hours">Hours</a></li>
+    <li><a href="#find-us">Find us</a></li>
+  </ul>
+</nav>
+
+<main class="wrap">
+
+  <section id="menu">
+    <h2>Menu</h2>
+    <div class="menu">
+      <div class="card">
+        <h3>Suppers</h3>
+        <p class="note">All suppers come wi’ chips. Single = no chips.</p>
+        <ul>
+          <li><span>Haddock supper</span><span class="price">£11.50</span></li>
+          <li><span>Large haddock supper</span><span class="price">£13.90</span></li>
+          <li><span>Scampi supper</span><span class="price">£10.80</span></li>
+          <li><span>Bridie supper</span><span class="price">£7.60</span></li>
+          <li><span>Peh (Scotch pie) supper</span><span class="price">£6.90</span></li>
+          <li><span>Haggis supper</span><span class="price">£7.90</span></li>
+          <li><span>Black pudding supper</span><span class="price">£7.20</span></li>
+          <li><span>Mealie (white) pudding supper</span><span class="price">£7.20</span></li>
+          <li><span>Smoked sausage supper</span><span class="price">£7.40</span></li>
+          <li><span>Chicken goujon supper</span><span class="price">£8.50</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Chippy specials</h3>
+        <p class="note">Battered and fried to order.</p>
+        <ul>
+          <li><span>Pizza crunch supper</span><span class="price">£8.90</span></li>
+          <li><span>Deep-fried Mars bar</span><span class="price">£3.20</span></li>
+          <li><span>Battered sausage</span><span class="price">£2.60</span></li>
+          <li><span>Fritter (battered tattie)</span><span class="price">£1.50</span></li>
+          <li><span>Veggie haggis supper</span><span class="price">£7.90</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Chips &amp; sides</h3>
+        <ul>
+          <li><span>Small chips</span><span class="price">£3.20</span></li>
+          <li><span>Large chips</span><span class="price">£4.30</span></li>
+          <li><span>Cheesy chips</span><span class="price">£4.80</span></li>
+          <li><span>Curry sauce</span><span class="price">£1.60</span></li>
+          <li><span>Gravy</span><span class="price">£1.50</span></li>
+          <li><span>Mushy peas</span><span class="price">£1.60</span></li>
+          <li><span>Pickled onion / egg</span><span class="price">£0.90</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Wee ones &amp; drinks</h3>
+        <ul>
+          <li><span>Kids’ fish bites &amp; chips</span><span class="price">£5.90</span></li>
+          <li><span>Kids’ sausage &amp; chips</span><span class="price">£5.20</span></li>
+          <li><span>Irn-Bru (can)</span><span class="price">£1.40</span></li>
+          <li><span>Other soft drinks (can)</span><span class="price">£1.30</span></li>
+          <li><span>Bottled water</span><span class="price">£1.10</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="small">Salt ’n’ vinegar or salt ’n’ sauce — just ask. Please tell us about any allergies before you order; we fry in beef dripping and have a separate vegetable-oil fryer for veggie items.</p>
+  </section>
+
+  <section id="hours">
+    <h2>Opening hours</h2>
+    <div class="hours-grid">
+      <div class="card">
+        <table aria-label="Opening hours">
+          <tbody id="hours-table">
+            <tr data-day="1"><td>Monday</td><td>Closed</td></tr>
+            <tr data-day="2"><td>Tuesday</td><td>4:30pm – 10:00pm</td></tr>
+            <tr data-day="3"><td>Wednesday</td><td>4:30pm – 10:00pm</td></tr>
+            <tr data-day="4"><td>Thursday</td><td>11:30am – 10:00pm</td></tr>
+            <tr data-day="5"><td>Friday</td><td>11:30am – 11:00pm</td></tr>
+            <tr data-day="6"><td>Saturday</td><td>11:30am – 11:00pm</td></tr>
+            <tr data-day="0"><td>Sunday</td><td>3:00pm – 9:30pm</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Phone ahead</h3>
+        <p>Beat the Friday queue — call your order through and it’ll be hot and waiting.</p>
+        <p><a class="call" href="tel:+441632960123">01632 960 123</a></p>
+        <p class="small">Hours may change on public holidays.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="find-us">
+    <h2>Find us</h2>
+    <div class="card">
+      <p style="margin:0">
+        <strong>The Tay Fryer</strong><br>
+        12 Example Street<br>
+        Dundee DD1 0XX
+      </p>
+      <p class="small">Cash and card accepted. Takeaway only.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">© <span id="year">2026</span> The Tay Fryer, Dundee</div>
+</footer>
+
+<script>
+  // Opening hours in 24h minutes, keyed by JS day (0 = Sunday). null = closed.
+  const HOURS = {
+    0: [15 * 60, 21 * 60 + 30],
+    1: null,
+    2: [16 * 60 + 30, 22 * 60],
+    3: [16 * 60 + 30, 22 * 60],
+    4: [11 * 60 + 30, 22 * 60],
+    5: [11 * 60 + 30, 23 * 60],
+    6: [11 * 60 + 30, 23 * 60],
+  };
+
+  function fmt(mins) {
+    const h = Math.floor(mins / 60), m = mins % 60;
+    const h12 = ((h + 11) % 12) + 1;
+    return h12 + (m ? ":" + String(m).padStart(2, "0") : "") + (h < 12 ? "am" : "pm");
+  }
+
+  // Use UK time regardless of the visitor's own time zone.
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/London", weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false
+  }).formatToParts(new Date());
+  const get = t => parts.find(p => p.type === t).value;
+  const day = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(get("weekday"));
+  const now = (parseInt(get("hour"), 10) % 24) * 60 + parseInt(get("minute"), 10);
+
+  const row = document.querySelector('#hours-table tr[data-day="' + day + '"]');
+  if (row) row.classList.add("today");
+
+  const today = HOURS[day];
+  const status = document.getElementById("status");
+  if (today && now >= today[0] && now < today[1]) {
+    status.textContent = "🟢 Open now until " + fmt(today[1]);
+  } else if (today && now < today[0]) {
+    status.textContent = "Opens today at " + fmt(today[0]);
+  } else {
+    status.textContent = "Closed just now";
+  }
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
